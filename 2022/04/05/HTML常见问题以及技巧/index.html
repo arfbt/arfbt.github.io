@@ -24,7 +24,7 @@
 <meta property="og:description" content="width属性的“继承”问题常见的拥有继承性的属性以text-、font-、line-开头的属性较为常用。其中也有例外如a标签的字体颜色是不继承的，它有它自己的默认颜色-蓝色，下划线等自带样式，h1~h6的字体大小是不继承的，跟a标签一样都是有自带默认值，除非单独为其设置样式才可以改变。  子元素是块级元素且无定位或浮动时，是不需要写width属性，就可以默认“继承”的。否则就要特殊声明一下wid">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-04-05T13:13:52.000Z">
-<meta property="article:modified_time" content="2022-04-06T10:27:24.372Z">
+<meta property="article:modified_time" content="2022-04-06T13:01:49.280Z">
 <meta property="article:author" content="nh">
 <meta property="article:tag" content="HTML">
 <meta property="article:tag" content="CSS">
@@ -214,7 +214,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.7k 字
+      2.8k 字
     </span>
   
 
@@ -223,7 +223,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5 分钟
+      9 分钟
     </span>
   
 
@@ -264,7 +264,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：10 分钟前
+                  本文最后更新于：21 分钟前
                 
               </p>
             
@@ -300,6 +300,27 @@
 <p><strong>浮动元素的包含块为其最近的块级祖先元素</strong>。</p>
 <p>应用：使用绝对定位来模拟固定定位（ie6下，fixed失效）</p>
 <p>解决思路：系统的滚动条是在文档上，而不是在html,body上。body下的元素当position为absolute时，包含块为初始包含块，当拉动系统滚动条时，包含块随之移动。把系统滚动条禁止掉，给body加上滚动条，body成为元素的初始包含块。拉动滚动条，达到fixed的效果。</p>
+<h2 id="置换元素（替换元素）"><a href="#置换元素（替换元素）" class="headerlink" title="置换元素（替换元素）"></a>置换元素（替换元素）</h2><p><strong>置换元素</strong>又叫<strong>替换元素</strong>，一个<strong>内容</strong>不受CSS视觉格式化模型控制，CSS渲染模型并不考虑对此内容的渲染，且元素本身一般拥有固有尺寸（宽度，高度，宽高比）的元素，被称之为置换元素。它们所具有的特征为：在不使用css修饰时，元素的标签和属性也会影响元素的显示。</p>
+<p>如在<span class="label label-primary">img</span>中，浏览器会根据src属性读取图片并显示，且图片大小会影响<span class="label label-primary">img</span>标签大小；<span class="label label-primary">input</span>标签的type属性会影响<span class="label label-primary">input</span>的显示是输入还是选择。</p>
+<p>常见的置换元素有<span class="label label-primary">img</span>、<span class="label label-primary">input</span>、<span class="label label-primary">textarea</span>、<span class="label label-primary">select</span>、<span class="label label-primary">object</span>、<span class="label label-primary">iframe</span>、<span class="label label-primary">canvas</span>等。</p>
+<p class="note note-danger">总结</p>
+
+<ul>
+<li>若<span style="color:rgb(255, 0, 255);">宽度</span>的值为 auto 且元素有固有宽度，则 width 的使用值为该固有宽度（拥有默认宽高的 input 当宽度的值为auto时，则宽度使用值为其默认的固有宽度）。</li>
+<li>若<span style="color:rgb(255, 0, 255);">宽度</span>的值为 auto 且高度有 非auto 的计算值，并且元素有固有宽高比，则 width 的使用值为 高度使用值 * 固有宽高比（img 当只定义了其高度值时，其宽度将会根据固有宽高比进行等比设置）。</li>
+<li>当<span style="color:rgb(255, 0, 255);">宽度</span>的值为 auto 时，则宽度的使用值为 300px（iframe, canvas等标签）。</li>
+<li>若<span style="color:rgb(255, 255, 0);">高度</span>的值为 auto 且元素有固有高度，则 height 的使用值为该固有高度（img标签内图片有固有高度）。</li>
+<li>若<span style="color:rgb(255, 255, 0);">高度</span>的值为 auto 且宽度有非 auto 的值，并且元素有固有宽高比，则 height 值为：宽度使用值 / 固有宽高比。</li>
+<li>若<span style="color:rgb(255, 255, 0);">高度</span>的值为 auto 且上述条件完全不符，则 height 值不能大于150px，且宽度不能大于长方形高度的2倍。</li>
+</ul>
+<h2 id="行内元素（内联元素）、行内块元素、块元素"><a href="#行内元素（内联元素）、行内块元素、块元素" class="headerlink" title="行内元素（内联元素）、行内块元素、块元素"></a>行内元素（内联元素）、行内块元素、块元素</h2><p><span style="color:rgb(255, 0, 0);"><strong>行内元素（display:inline）</strong></span></p>
+<p><strong>特点</strong>：在水平方向上排列，它的宽高随内容而定。不可以设置宽高，可以设置行高（line-height）。设置margin和padding的上下无效。<br><strong>常见的行内元素</strong>：<span class="label label-primary">a</span>、<span class="label label-primary">ins</span>、<span class="label label-primary">br</span>、<span class="label label-primary">em</span>、<span class="label label-primary">font</span>、<span class="label label-primary">img</span>、<span class="label label-primary">input</span>、<span class="label label-primary">label</span>、<span class="label label-primary">select</span>、<span class="label label-primary">small</span>、<span class="label label-primary">span</span>、<span class="label label-primary">del</span>、<span class="label label-primary">strong</span><br><strong>注意</strong>：<u><em><strong>虽然行内元素设置行高之后会有位置的变化，但是并没有改变盒子大小。有些行内元素可以设置宽高，是因为它们是置换元素(拥有内置宽高也可以设置宽高属性)。</strong></em></u></p>
+<p><span style="color:rgb(255, 0, 0);"><strong>行内块元素（display:inline-block）</strong></span></p>
+<p><strong>特点</strong>：拥有块级元素和行内的性质，既可以在一行排列(从左到右)，也可以设置宽高等属性，不自动换行。</p>
+<p><strong>常见的行内块元素</strong>：<span class="label label-primary">input</span>、<span class="label label-primary">img</span>、<span class="label label-primary">video</span>、<span class="label label-primary">select</span>、<span class="label label-primary">sourse</span></p>
+<p><span style="color:rgb(255, 0, 0);"><strong>块元素（display:block）</strong></span></p>
+<p><strong>特点</strong>：在垂直方向上排列，独占一行，自动换行。</p>
+<p><strong>常见的块元素</strong>：<span class="label label-primary">div</span>、<span class="label label-primary">dl</span>、<span class="label label-primary">dd</span>、<span class="label label-primary">dt</span>、<span class="label label-primary">form</span>、<span class="label label-primary">h1~h6</span>、<span class="label label-primary">hr</span>、<span class="label label-primary">ol</span>、<span class="label label-primary">p</span>、<span class="label label-primary">header</span>、<span class="label label-primary">footer</span>、<span class="label label-primary">section</span>、<span class="label label-primary">nav</span></p>
 
             </div>
             <hr>
@@ -337,6 +358,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/04/06/%E5%9F%BA%E4%BA%8E%E6%8E%92%E5%88%97%E6%9E%84%E5%BB%BA%E6%95%B0%E7%BB%84/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">基于排列构建数组</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
