@@ -19,16 +19,15 @@
   <meta name="description" content="width属性的“继承”问题常见的拥有继承性的属性以text-、font-、line-开头的属性较为常用。其中也有例外如a标签的字体颜色是不继承的，它有它自己的默认颜色-蓝色，下划线等自带样式，h1~h6的字体大小是不继承的，跟a标签一样都是有自带默认值，除非单独为其设置样式才可以改变。  子元素是块级元素且无定位或浮动时，是不需要写width属性，就可以默认“继承”的。否则就要特殊声明一下wid">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTML常见问题以及技巧">
-<meta property="og:url" content="http://example.com/2022/04/05/HTML%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%BB%A5%E5%8F%8A%E6%8A%80%E5%B7%A7/index.html">
+<meta property="og:url" content="http://example.com/2022/04/05/HTML+CSS%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%BB%A5%E5%8F%8A%E6%8A%80%E5%B7%A7/index.html">
 <meta property="og:site_name" content="nh&#39;Blog">
 <meta property="og:description" content="width属性的“继承”问题常见的拥有继承性的属性以text-、font-、line-开头的属性较为常用。其中也有例外如a标签的字体颜色是不继承的，它有它自己的默认颜色-蓝色，下划线等自带样式，h1~h6的字体大小是不继承的，跟a标签一样都是有自带默认值，除非单独为其设置样式才可以改变。  子元素是块级元素且无定位或浮动时，是不需要写width属性，就可以默认“继承”的。否则就要特殊声明一下wid">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-04-05T13:13:52.000Z">
-<meta property="article:modified_time" content="2022-05-04T06:19:23.555Z">
+<meta property="article:modified_time" content="2022-05-04T11:15:58.092Z">
 <meta property="article:author" content="nh">
 <meta property="article:tag" content="HTML">
 <meta property="article:tag" content="CSS">
-<meta property="article:tag" content="JS">
 <meta name="twitter:card" content="summary_large_image">
   
   <title>HTML常见问题以及技巧 - nh&#39;Blog</title>
@@ -214,7 +213,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.4k 字
+      5.2k 字
     </span>
   
 
@@ -223,7 +222,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      14 分钟
+      16 分钟
     </span>
   
 
@@ -264,7 +263,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：11 分钟前
+                  本文最后更新于：1 天前
                 
               </p>
             
@@ -379,6 +378,18 @@
 <li>解决外边距重叠</li>
 <li>阻止标准流元素被浮动元素覆盖</li>
 </ul>
+<h2 id="img父元素高出3px原因及解决方案"><a href="#img父元素高出3px原因及解决方案" class="headerlink" title="img父元素高出3px原因及解决方案"></a>img父元素高出3px原因及解决方案</h2><h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>​        当div/a中包含img时，父元素的高度比img图片的高度多出3px，img是一种类似text的标签元素，在结束的时候，会在末尾加上一个空白符（匿名文本），这个文本外有一个匿名行级盒子，它默认的vertical-align是baseline的，而且往往因为上文line-height的影响，使它有个line-height，从而使其有了高度，因为baseline对齐的原因，这个匿名盒子就会下沉，往下撑开一些距离，所以把父元素撑高了。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ul>
+<li>消除掉匿名盒子的高度，给a设置line-height:0或font-size:0</li>
+<li>给两者vertical-align:top，让其top对齐，而不是baseline对齐</li>
+<li>给img以display:block，让它和匿名行级盒子不在一个布局上下文中，也就不存在行级盒的对齐问题</li>
+</ul>
+<h2 id="overflow-hidden的作用"><a href="#overflow-hidden的作用" class="headerlink" title="overflow:hidden的作用"></a>overflow:hidden的作用</h2><ul>
+<li>给一个元素中设置<code>overflow:hidden</code>，那么该元素的内容若超出了给定的宽度和高度属性，那么超出的部分将会被隐藏，不占位（一般情况下，在页面中，一般溢出后会显示省略号，比如，当一行文本超出固定宽度就隐藏超出的内容显示省略号，这时就需要以下属性配合工作：<code>overflow: hidden;</code> <code>white-space: nowrap;</code> <code>text-overflow: ellipsis;</code>）</li>
+<li>给父元素设置<code>overflow:hidden</code>可以清除子元素的浮动，在IE比较低版本的浏览器中还需要加上<code>zoom:1;</code></li>
+<li>父级元素内部有子元素，如果给子元素添加margin-top样式，那么父级元素也会跟着下来，造成外边距塌陷，这时给父级元素添加<code>overflow:hidden</code>即可解决</li>
+</ul>
+<h2 id="flex收缩极限"><a href="#flex收缩极限" class="headerlink" title="flex收缩极限"></a>flex收缩极限</h2><p><code>flex-shrink</code>并不能够无限缩小，而是有极限的，比如不会收缩到比里面的内容还小，具体算法不再探究</p>
 
             </div>
             <hr>
@@ -388,7 +399,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/HTML-CSS-JS/">HTML+CSS+JS</a>
+                      <a class="hover-with-bg" href="/categories/HTML-CSS/">HTML+CSS</a>
                     
                   </div>
                 
@@ -399,8 +410,6 @@
                       <a class="hover-with-bg" href="/tags/HTML/">HTML</a>
                     
                       <a class="hover-with-bg" href="/tags/CSS/">CSS</a>
-                    
-                      <a class="hover-with-bg" href="/tags/JS/">JS</a>
                     
                   </div>
                 

@@ -1,0 +1,638 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="nh">
+  <meta name="keywords" content="">
+  <meta name="description" content="JS输出问题如果在文档加载完成后（即HTML输出已完成），再使用document.write()方法来要求浏览器来解析你的内容，则浏览器就会重写整个document，导致最后的这个document.write()方法输出的内容会覆盖之前所有的内容，如使用button标签： 1&lt;button onclick&#x3D;&quot;document.write(&amp;#x27;&lt;h1&gt;点击渲染&amp;l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS常见问题以及技巧">
+<meta property="og:url" content="http://example.com/2022/05/04/JS%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%BB%A5%E5%8F%8A%E6%8A%80%E5%B7%A7/index.html">
+<meta property="og:site_name" content="nh&#39;Blog">
+<meta property="og:description" content="JS输出问题如果在文档加载完成后（即HTML输出已完成），再使用document.write()方法来要求浏览器来解析你的内容，则浏览器就会重写整个document，导致最后的这个document.write()方法输出的内容会覆盖之前所有的内容，如使用button标签： 1&lt;button onclick&#x3D;&quot;document.write(&amp;#x27;&lt;h1&gt;点击渲染&amp;l">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/arfbt/picgo/raw/master/img/202205052020327.png">
+<meta property="article:published_time" content="2022-05-04T11:15:23.000Z">
+<meta property="article:modified_time" content="2022-05-05T12:58:10.868Z">
+<meta property="article:author" content="nh">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/arfbt/picgo/raw/master/img/202205052020327.png">
+  
+  <title>JS常见问题以及技巧 - nh&#39;Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>nh&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/js-banner.jpeg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="JS常见问题以及技巧">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-05-04 19:15" pubdate>
+        2022年5月4日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      20 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">JS常见问题以及技巧</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：3 小时前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="JS输出问题"><a href="#JS输出问题" class="headerlink" title="JS输出问题"></a>JS输出问题</h2><p>如果在文档加载完成后（即HTML输出已完成），再使用document.write()方法来要求浏览器来解析你的内容，则浏览器就会重写整个document，导致最后的这个document.write()方法输出的内容会覆盖之前所有的内容，如使用<code>button</code>标签：</p>
+<figure class="highlight html"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;document.write(&#x27;&lt;h1&gt;点击渲染&lt;/h1&gt;&#x27;)&quot;</span>&gt;</span>试试就逝世<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br></code></pre></div></td></tr></table></figure>
+
+<h2 id="String-和-toString"><a href="#String-和-toString" class="headerlink" title="String() 和 toString()"></a>String() 和 toString()</h2><h3 id="String"><a href="#String" class="headerlink" title="String()"></a>String()</h3><ul>
+<li>String() 是 JavaScript 的全局函数</li>
+<li>String()只支持转为普通字符串，不支持转为相应进制的字符串</li>
+<li>String() 可以将 <code>null</code> <code>undefined</code> 转化为字符串</li>
+<li>如果String() 的参数有toString() 方法，就调用该方法，如果是<code>null</code>则返回<code>null</code>，如果是<code>undefined</code>就返回<code>undefined</code></li>
+</ul>
+<h3 id="toString-特殊问题"><a href="#toString-特殊问题" class="headerlink" title="toString()特殊问题"></a>toString()特殊问题</h3><h4 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h4><p>​        JavaScript引擎在解释代码时，对于1.toString()认为第一个.是浮点符号；第二个为属性访问的语法，所以 <code>1..toString()</code>正常；而 <code>(1).toString()</code> 排除了小数点的影响所以也为正常</p>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-number">1.</span>toString()<br><span class="hljs-comment">// Uncaught SyntaxError: Invalid or unexpected token</span><br>(<span class="hljs-number">1</span>).toString()<br><span class="hljs-comment">// &quot;1&quot;</span><br><span class="hljs-number">1.</span>.toString()<br><span class="hljs-comment">// &quot;1&quot;</span><br></code></pre></div></td></tr></table></figure>
+
+<h4 id="纯小数的小数点后面有连续6个或6个以上的0时，小数将用科学计数法输出"><a href="#纯小数的小数点后面有连续6个或6个以上的0时，小数将用科学计数法输出" class="headerlink" title="纯小数的小数点后面有连续6个或6个以上的0时，小数将用科学计数法输出"></a>纯小数的小数点后面有连续6个或6个以上的0时，小数将用科学计数法输出</h4><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> num = <span class="hljs-number">0.000006</span>; <span class="hljs-comment">//小数点后面有5个“0”</span><br><span class="hljs-built_in">console</span>.log(num.toString());<br><span class="hljs-comment">//&quot;0.000006&quot;</span><br><br>num = <span class="hljs-number">0.0000006</span> ;<span class="hljs-comment">//小数点后面有6个“0”</span><br><span class="hljs-built_in">console</span>.log(num.toString());<br><span class="hljs-comment">//&quot;6e-7&quot;</span><br></code></pre></div></td></tr></table></figure>
+
+<h4 id="浮点数整数部分的位数大于21时，输出时采用科学计数法"><a href="#浮点数整数部分的位数大于21时，输出时采用科学计数法" class="headerlink" title="浮点数整数部分的位数大于21时，输出时采用科学计数法"></a>浮点数整数部分的位数大于21时，输出时采用科学计数法</h4><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> num = <span class="hljs-number">1234567890123456789012</span>;<br><span class="hljs-built_in">console</span>.log(num.toString());<br><span class="hljs-comment">//&quot;1.2345678901234568e+21&quot;</span><br></code></pre></div></td></tr></table></figure>
+
+<h3 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString()"></a>toString()</h3><ul>
+<li>toString() 是 Object 原型的一个方法</li>
+<li>toString() 可以转换进制字符串，如：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-comment">// 将十进制转化为二进制</span><br><span class="hljs-keyword">var</span> num = <span class="hljs-number">2</span>;<br>num.toString(num, <span class="hljs-number">2</span>);<br><span class="hljs-comment">// &quot;10&quot;</span><br></code></pre></div></td></tr></table></figure>
+
+<ul>
+<li>toString() 不能将 <code>null</code> <code>undefined</code> 转化为字符串</li>
+</ul>
+<h2 id="特殊数值计算问题"><a href="#特殊数值计算问题" class="headerlink" title="特殊数值计算问题"></a>特殊数值计算问题</h2><h3 id="infinity"><a href="#infinity" class="headerlink" title="infinity"></a>infinity</h3><ul>
+<li><p>计算超出范围会得到无穷大(infinity)或者无穷小(-infinity)</p>
+</li>
+<li><p>分母为0会构成无穷大Infinity 或负无穷大-Infinity</p>
+</li>
+<li><p>关于Infinity的运算，infinity加减乘除一个数字都是Infinity，Infinity和Infinity计算，加法乘法为Infinity，其他为NaN</p>
+</li>
+<li><p>Infinity和自身相等 其他比较正常</p>
+</li>
+</ul>
+<h3 id="NaN"><a href="#NaN" class="headerlink" title="NaN"></a>NaN</h3><ul>
+<li>NaN特点：<strong>无论和谁比较都是fasle，无论和谁计算都是NaN（除了字符串加法）</strong></li>
+</ul>
+<h2 id="转bool值为false的6种情况"><a href="#转bool值为false的6种情况" class="headerlink" title="转bool值为false的6种情况"></a>转bool值为false的6种情况</h2><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-comment">// 1、null</span><br>       <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Boolean</span>(<span class="hljs-literal">null</span>));<span class="hljs-comment">//false</span><br><br>       <span class="hljs-comment">// 2.undefined</span><br>       <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Boolean</span>(<span class="hljs-literal">undefined</span>));<span class="hljs-comment">//false</span><br><br>       <span class="hljs-comment">// 3.number	非0为true  0为false NaN为false</span><br>       <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Boolean</span>(<span class="hljs-number">0</span>));<span class="hljs-comment">//false</span><br>       <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Boolean</span>(<span class="hljs-literal">NaN</span>));<span class="hljs-comment">//false</span><br><br>       <span class="hljs-comment">// 4.string	空为false  非空为true</span><br>       <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Boolean</span>(<span class="hljs-string">&quot;&quot;</span>));<span class="hljs-comment">//false</span><br><br><span class="hljs-comment">// 5.boolean</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Boolean</span>(<span class="hljs-literal">false</span>));<span class="hljs-comment">//false</span><br></code></pre></div></td></tr></table></figure>
+
+<h2 id="Null-和-Undefined"><a href="#Null-和-Undefined" class="headerlink" title="Null 和 Undefined"></a>Null 和 Undefined</h2><ul>
+<li>Undefined派生自Null，两者都是表示空缺值，转换成布尔值都是false，<code>null == undefined</code></li>
+<li>Undefined和Null属于两种不同的类型</li>
+<li>从逻辑角度来看，null 值表示一个空对象指针，而这也正是使用 typeof 操作符检测null时会返回<code>object</code>的原因</li>
+<li>Undefined隐含着意外的空值，而Null隐含着意料之中的空值。因此设置一个变量、参数为空的时候，建议使用null而不是undefined</li>
+</ul>
+<h2 id="JS判断数据类型的方法"><a href="#JS判断数据类型的方法" class="headerlink" title="JS判断数据类型的方法"></a>JS判断数据类型的方法</h2><ul>
+<li>typeof可以识别出基本类型String，、Number、Boolean、Undefined、Symbol，但是<em><strong>不能识别null</strong></em>。不能识别引用数据类型，会把null、array、object统一归为object类型,但是可以识别出function，所以typeof可以用来识别基本类型</li>
+<li>instanceof不能识别出基本的数据类型 String、Number、Boolean、Undefined、Null、Symbol，但是可以检测出引用类型，如array、object、function，同时对于是使用new声明的类型，它还可以检测出多层继承关系。js的继承都是采用原型链来继承的，比如Dog  instanceof Animal ，其实就是看objA的原型链上是否有A的原型，而A的原型上保留A的constructor属性，所以instanceof一般用来检测对象类型，以及继承关系</li>
+<li>null、undefined没有construstor方法，因此constructor不能判断undefined和null</li>
+<li>Object.prototype.toString.call( ) 可以判断所有js数据类型</li>
+</ul>
+<h2 id="Number-为0的6种情况"><a href="#Number-为0的6种情况" class="headerlink" title="Number( )为0的6种情况"></a>Number( )为0的6种情况</h2><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-comment">// 1、number</span><br>     	<span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Number</span>(<span class="hljs-number">0</span>)); <span class="hljs-comment">// 0</span><br><br>       <span class="hljs-comment">// 2、string</span><br>       <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Number</span>(<span class="hljs-string">&quot;&quot;</span>));<span class="hljs-comment">//0 空字符串--&gt;0</span><br>       <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Number</span>(<span class="hljs-string">&quot;   &quot;</span>));<span class="hljs-comment">//0 都是空格的字符串--&gt;0</span><br>       <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Number</span>(<span class="hljs-string">&quot;0&quot;</span>));<span class="hljs-comment">// 0</span><br><br>       <span class="hljs-comment">// 3、boolean</span><br>       <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Number</span>(<span class="hljs-literal">false</span>));<span class="hljs-comment">//0  false--&gt;0</span><br><br>       <span class="hljs-comment">// 4、null</span><br>       <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Number</span>(<span class="hljs-literal">null</span>));<span class="hljs-comment">// 0   null---&gt;0</span><br></code></pre></div></td></tr></table></figure>
+
+<h2 id="Number-为NaN的3种情况"><a href="#Number-为NaN的3种情况" class="headerlink" title="Number( )为NaN的3种情况"></a>Number( )为NaN的3种情况</h2><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"> <span class="hljs-comment">// 1、number</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Number</span>(<span class="hljs-literal">NaN</span>)); <span class="hljs-comment">// NaN</span><br><br> <span class="hljs-comment">// 2、string</span><br> <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Number</span>(<span class="hljs-string">&quot;1a23&quot;</span>));<span class="hljs-comment">// 非纯数字的字符串--&gt;NaN</span><br><br> <span class="hljs-comment">// 3、undefined</span><br> <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Number</span>(<span class="hljs-literal">undefined</span>));<span class="hljs-comment">//NaN  undefined--&gt;NaN</span><br></code></pre></div></td></tr></table></figure>
+
+<h2 id="不同类型之间进行比较"><a href="#不同类型之间进行比较" class="headerlink" title="不同类型之间进行比较"></a>不同类型之间进行比较</h2><ul>
+<li>两个操作数都是数值，则进行数值比较</li>
+<li>两个操作数都是字符串，则比较两个字符串对应ASCⅡ码</li>
+<li>两个操作数有一个是数值，则将另一个转换为数值，再进行数值比较</li>
+<li>两个操作数有一个是对象，则先调用valueOf()方法或toString()方法，再用结果比较</li>
+</ul>
+<p><img src="https://gitee.com/arfbt/picgo/raw/master/img/202205052020327.png" srcset="/img/loading.gif" lazyload alt="13"></p>
+<h2 id="常用数组方法"><a href="#常用数组方法" class="headerlink" title="常用数组方法"></a>常用数组方法</h2><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> arr = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>];<br>		<span class="hljs-comment">//数组增删改查</span><br>		<br>		<span class="hljs-comment">//从末尾增</span><br>		<span class="hljs-keyword">var</span> result = arr.push(<span class="hljs-number">100</span>,<span class="hljs-number">200</span>,<span class="hljs-number">300</span>,[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]);<br>		<span class="hljs-built_in">console</span>.log(result);<br>		<span class="hljs-built_in">console</span>.log(arr);<br>		<span class="hljs-comment">//功能：从数组的末尾增加一个或者多个</span><br>		<span class="hljs-comment">//参数：增加的元素</span><br>		<span class="hljs-comment">//返回值：返回加入元素后数组的新长度</span><br>		<span class="hljs-comment">//这个方法对原数组有影响</span><br>		<br>		<span class="hljs-comment">//从末尾去删</span><br>		<span class="hljs-keyword">var</span> result = arr.pop();<br>		<span class="hljs-built_in">console</span>.log(result);<br>		<span class="hljs-built_in">console</span>.log(arr);<br>		<span class="hljs-comment">//功能：从数组的末尾删除一个</span><br>		<span class="hljs-comment">//参数：无</span><br>		<span class="hljs-comment">//返回值：返回删除的那一个元素</span><br>		<span class="hljs-comment">//这个方法对原数组有影响</span><br>		<br>		<span class="hljs-comment">//从头部增</span><br>		<span class="hljs-keyword">var</span> result = arr.unshift(<span class="hljs-number">100</span>,<span class="hljs-number">200</span>,<span class="hljs-number">300</span>,[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]);<br>		<span class="hljs-built_in">console</span>.log(result);<br>		<span class="hljs-built_in">console</span>.log(arr);<br>		<span class="hljs-comment">//功能：从数组的头部增加一个或者多个</span><br>		<span class="hljs-comment">//参数：增加的元素</span><br>		<span class="hljs-comment">//返回值：返回加入元素后数组的新长度</span><br>		<span class="hljs-comment">//这个方法对原数组有影响</span><br>		<br>		<span class="hljs-comment">//从头部去删</span><br>		<span class="hljs-keyword">var</span> result = arr.shift();<br>		<span class="hljs-built_in">console</span>.log(result);<br>		<span class="hljs-built_in">console</span>.log(arr);<br>		<span class="hljs-comment">//功能：从数组的头部删除一个</span><br>		<span class="hljs-comment">//参数：无</span><br>		<span class="hljs-comment">//返回值：返回删除的那一个元素</span><br>		<span class="hljs-comment">//这个方法对原数组有影响</span><br>		<br>		<br>		<span class="hljs-comment">//增删改一体化</span><br>		<span class="hljs-comment">//这个方法根据参数的不同，有不同的功能</span><br>		<span class="hljs-comment">//这个方法我们大家先当作删除去理解</span><br><br>		<span class="hljs-comment">//保留</span><br>		<span class="hljs-keyword">var</span> result = arr.splice(<span class="hljs-number">1</span>);<br>		<span class="hljs-built_in">console</span>.log(result);<br>		<span class="hljs-built_in">console</span>.log(arr);<br>		<span class="hljs-comment">//功能：从数组0位开始保留原数组的任意个元素</span><br>		<span class="hljs-comment">//参数：一个   代表保留的元素个数</span><br>		<span class="hljs-comment">//返回值：返回原数组除去保留元素之后的数组</span><br>		<span class="hljs-comment">//这个方法对原数组有影响</span><br><br>		<span class="hljs-comment">//删除</span><br>		<span class="hljs-keyword">var</span> result = arr.splice(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>);<br>		<span class="hljs-built_in">console</span>.log(result);<br>		<span class="hljs-built_in">console</span>.log(arr);<br>		<span class="hljs-comment">//功能：从数组的任意位置删除任意个元素</span><br>		<span class="hljs-comment">//参数：两个   第一个代表从哪开始，第二个代表删除几个</span><br>		<span class="hljs-comment">//返回值：返回删除的元素组成的新数组</span><br>		<span class="hljs-comment">//这个方法对原数组有影响</span><br>		<br>		<span class="hljs-comment">//增加</span><br>		<span class="hljs-keyword">var</span> result = arr.splice(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>,<span class="hljs-number">400</span>,<span class="hljs-number">500</span>,<span class="hljs-number">600</span>);<br>		<span class="hljs-built_in">console</span>.log(result);<br>		<span class="hljs-built_in">console</span>.log(arr);<br>		<span class="hljs-comment">//功能：从数组的任意位置添加任意多个元素</span><br>		<span class="hljs-comment">//参数：多个   第一个代表从哪开始，第二个代表删除0个，后面的代表新增的元素</span><br>		<span class="hljs-comment">//返回值：返回删除的元素组成的新数组，最终是空数组</span><br>		<span class="hljs-comment">//这个方法对原数组有影响</span><br>		<br>		<span class="hljs-comment">//修改</span><br>		<span class="hljs-keyword">var</span> result = arr.splice(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1000</span>,<span class="hljs-number">2000</span>);<br>		<span class="hljs-built_in">console</span>.log(result);<br>		<span class="hljs-built_in">console</span>.log(arr);<br>		<span class="hljs-comment">//功能：修改数组当中任意的元素</span><br>		<span class="hljs-comment">//参数：多个   第一个代表从哪开始，第二个代表删除几个，后面的代表新增的元素</span><br>		<span class="hljs-comment">//返回值：返回删除的元素组成的新数组</span><br>		<span class="hljs-comment">//这个方法对原数组有影响</span><br>		<br>		<span class="hljs-comment">//翻转数组</span><br>		<span class="hljs-keyword">var</span> result = arr.reverse();<br>		<span class="hljs-built_in">console</span>.log(result);<br>		<span class="hljs-built_in">console</span>.log(arr);<br>		<span class="hljs-built_in">console</span>.log(result == arr);<br>		<span class="hljs-comment">//功能：翻转数组</span><br>		<span class="hljs-comment">//参数：无</span><br>		<span class="hljs-comment">//返回值：返回翻转后的原数组</span><br>		<span class="hljs-comment">//这个方法影响原数组</span><br><br><br>		<span class="hljs-comment">//把数组再转化为字符串  和字符串方法 split是一个逆运算</span><br>		<span class="hljs-keyword">var</span> result = arr.join(<span class="hljs-string">&#x27;&#x27;</span>);<br>		<span class="hljs-comment">//功能：以指定的字符串为连接符，讲数组元素连接成一个字符串</span><br>		<span class="hljs-comment">//参数：如果不传，默认以逗号为连接符，将元素连接成字符串</span><br>		<span class="hljs-comment">//		如果传的是正常字符串，那么以这个字符串为连接符将元素连接成字符串</span><br>		<span class="hljs-comment">//     如果传的是空串，那么直接将字符串连接成字符串，中间没有任何连接</span><br>		<span class="hljs-comment">//返回值：返回连接好的字符串</span><br>		<span class="hljs-comment">//这个方法对原数组没有影响</span><br>		<span class="hljs-built_in">console</span>.log(result);<br>		<span class="hljs-built_in">console</span>.log(arr);<br><br>		<span class="hljs-comment">//concat</span><br>		<span class="hljs-keyword">var</span> result = arr.concat([<span class="hljs-number">100</span>,<span class="hljs-number">200</span>,<span class="hljs-number">300</span>]);<br>		<span class="hljs-built_in">console</span>.log(result);<br>		<span class="hljs-built_in">console</span>.log(arr);<br>		<span class="hljs-built_in">console</span>.log(arr === result);<br>		<span class="hljs-comment">//功能：在数组的末尾拼接元素</span><br>		<span class="hljs-comment">//参数：可以不写，相当于复制一个数组</span><br>		<span class="hljs-comment">//     也可以写一个或者多个值，会把这些值拼接到数组末尾</span><br>		<span class="hljs-comment">//     也可以写数组，会先把数组拆开，把元素拼接到数组末尾</span><br>		<span class="hljs-comment">//返回值：返回拼接好的新数组</span><br>		<span class="hljs-comment">//这个方法对原数组没有影响</span><br>		<br>		<br>		<span class="hljs-comment">//slice</span><br>		<span class="hljs-keyword">var</span> result = arr.slice(<span class="hljs-number">1</span>,<span class="hljs-number">3</span>);<br>		<span class="hljs-built_in">console</span>.log(result);<br>		<span class="hljs-built_in">console</span>.log(arr);<br>		<span class="hljs-comment">//功能：在数组当中截取部分元素形成新数组</span><br>		<span class="hljs-comment">//参数：和字符串方法slice一致；起始位置和结束位置，不包含结束位置的元素</span><br>		<span class="hljs-comment">//  如果只传一个代表起始位置，一直到结束。两个位置都可以使用负数</span><br>		<span class="hljs-comment">//返回值：返回截取的元素形成的新数组</span><br>		<span class="hljs-comment">//这个方法对原数组没有影响</span><br>		<br>		arr = [<span class="hljs-number">18</span>,<span class="hljs-number">2</span>,<span class="hljs-number">10</span>,<span class="hljs-number">9</span>,<span class="hljs-number">88</span>,<span class="hljs-number">66</span>,<span class="hljs-number">22</span>];<br>		<br>		<span class="hljs-keyword">var</span> result = arr.sort(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a,b</span>)</span>&#123;<br>			<span class="hljs-keyword">return</span> b - a;<br>		&#125;);<br>		<span class="hljs-built_in">console</span>.log(result);<br>		<span class="hljs-built_in">console</span>.log(arr);<br>		<span class="hljs-built_in">console</span>.log(result === arr);<br>		<span class="hljs-comment">//功能：对数组进行排序</span><br>		<span class="hljs-comment">//参数：如果不写，默认把每个元素转化为字符串进行排序（按照Unicode码）</span><br>		<span class="hljs-comment">//	   如果要按照升序降序去排，需要传一个参数是函数</span><br>		<span class="hljs-comment">//     这个函数有两个形参</span><br>		<br>		<span class="hljs-comment">//返回值：排好序的原数组</span><br>		<span class="hljs-comment">//这个方法对原数组有影响</span><br>				<br>		<span class="hljs-comment">//valueOf 是Object的原型当中的</span><br>		<span class="hljs-comment">//返回数组实例对象。</span><br>		<span class="hljs-keyword">var</span> result = arr.valueOf()<br>		<span class="hljs-built_in">console</span>.log(result);<br>		<span class="hljs-built_in">console</span>.log(arr);<br>		<span class="hljs-built_in">console</span>.log(result === arr);<br><br>		<span class="hljs-keyword">var</span> o = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">&#x27;111&#x27;</span>);<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">typeof</span> o);<br>		<span class="hljs-keyword">var</span> s = o.valueOf();<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">typeof</span> s);<br>		<span class="hljs-comment">//功能：获取数组对象的基本值，数组实例对象。</span><br>		<span class="hljs-comment">//参数：无</span><br>		<span class="hljs-comment">//返回值：返回原数组，因为数组是非包装对象，所以它是没有基本值</span><br>		<br>		<span class="hljs-comment">//toString</span><br>		<span class="hljs-keyword">var</span> result = arr.toString()<br>     		<span class="hljs-built_in">console</span>.log(result);<br>		<span class="hljs-built_in">console</span>.log(arr);<br>		<span class="hljs-comment">//功能：将数组对象转化为字符串</span><br>		<span class="hljs-comment">//参数：无</span><br>		<span class="hljs-comment">//返回值：把数组的中括号去掉，其余加引号形成字符串返回</span><br></code></pre></div></td></tr></table></figure>
+
+<p>对原数组有影响的方法：<code>push()</code> <code>pop()</code> <code>unshift()</code> <code>shift()</code> <code>splice()</code> <code>reverse()</code> <code>sort()</code></p>
+<p>对原数组没有影响的方法：<code>join()</code> <code>concat()</code> <code>slice()</code> <code>valueOf()</code> <code>toString()</code></p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/JS/">JS</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/JS/">JS</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/07/%E6%95%B0%E7%BB%84%E4%B8%B2%E8%81%94/">
+                        <span class="hidden-mobile">数组串联</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js', function() {
+        var options = Object.assign(
+          {"envId":"https://twikoo-ruddy.vercel.app","region":"ap-shanghai","path":"window.location.pathname"},
+          {
+            el: '#twikoo',
+            path: 'window.location.pathname',
+            onCommentLoaded: function() {
+              Fluid.plugins.initFancyBox('#twikoo .tk-content img:not(.tk-owo-emotion)');
+            }
+          }
+        )
+        twikoo.init(options)
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a>© 2021 nh | </a> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        陇ICP备2021002517号
+      </a>
+    </span>
+    
+      
+        <span>
+          <a
+            href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=62010202003395"
+            rel="nofollow noopener"
+            class="beian-police"
+            target="_blank"
+          >
+            
+              <span style="visibility: hidden; width: 0">|</span>
+              <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+            
+            <span>甘公网安备62010202003395号</span>
+          </a>
+        </span>
+      
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+<script src="/js/iconfont.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
