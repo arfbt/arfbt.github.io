@@ -1,0 +1,665 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="nh">
+  <meta name="keywords" content="">
+  <meta name="description" content="Buffer12345678910111213&#x2F;&#x2F;  这里创建10个成员,每个成员是 1 Byte(8bit),显示的时候是16进制,所以是00两位&#x2F;&#x2F; &lt;Buffer 00 00 00 00 00 00 00 00 00 00&gt;let buf1 &#x3D; Buffer.alloc(10);&#x2F;&#x2F; 把字符串存到了Buffer中let buf2 &#x3D; Buffer.from(&quot;ilove">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NodeJS常见问题以及技巧">
+<meta property="og:url" content="http://example.com/2022/06/27/NodeJS%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%BB%A5%E5%8F%8A%E6%8A%80%E5%B7%A7/index.html">
+<meta property="og:site_name" content="nh&#39;Blog">
+<meta property="og:description" content="Buffer12345678910111213&#x2F;&#x2F;  这里创建10个成员,每个成员是 1 Byte(8bit),显示的时候是16进制,所以是00两位&#x2F;&#x2F; &lt;Buffer 00 00 00 00 00 00 00 00 00 00&gt;let buf1 &#x3D; Buffer.alloc(10);&#x2F;&#x2F; 把字符串存到了Buffer中let buf2 &#x3D; Buffer.from(&quot;ilove">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-27T11:12:23.000Z">
+<meta property="article:modified_time" content="2022-07-04T12:46:24.750Z">
+<meta property="article:author" content="nh">
+<meta property="article:tag" content="NodeJS">
+<meta name="twitter:card" content="summary_large_image">
+  
+  <title>NodeJS常见问题以及技巧 - nh&#39;Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>nh&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/js-banner.jpeg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="NodeJS常见问题以及技巧">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-27 19:12" pubdate>
+        2022年6月27日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.9k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      22 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">NodeJS常见问题以及技巧</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：17 天前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h3><figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-comment">//  这里创建10个成员,每个成员是 1 Byte(8bit),显示的时候是16进制,所以是00两位</span><br><span class="hljs-comment">// &lt;Buffer 00 00 00 00 00 00 00 00 00 00&gt;</span><br><span class="hljs-keyword">let</span> buf1 = Buffer.alloc(<span class="hljs-number">10</span>);<br><br><span class="hljs-comment">// 把字符串存到了Buffer中</span><br><span class="hljs-keyword">let</span> buf2 = Buffer.from(<span class="hljs-string">&quot;iloveyou&quot;</span>);<br><span class="hljs-built_in">console</span>.log(buf2); <span class="hljs-comment">// &lt;Buffer 69 6c 6f 76 65 79 6f 75&gt;</span><br>buf2[<span class="hljs-number">0</span>] = <span class="hljs-number">97</span>; <span class="hljs-comment">// 设置值   97对相应的是ascii码里面对对应的字符</span><br><span class="hljs-built_in">console</span>.log(buf2); <span class="hljs-comment">// &lt;Buffer 61 6c 6f 76 65 79 6f 75&gt;</span><br><br><span class="hljs-keyword">let</span> buf3 = Buffer.from(<span class="hljs-string">&#x27;iloveyou&#x27;</span>); <span class="hljs-comment">// 把字符串存到了Buffer中</span><br><br><span class="hljs-keyword">let</span> buf = Buffer.from(<span class="hljs-string">&quot;我爱你&quot;</span>); <span class="hljs-comment">// &lt;Buffer e6 88 91 e7 88 b1 e4 bd a0&gt; 一个中文占3个字节（Unicode编码）</span><br></code></pre></div></td></tr></table></figure>
+
+<h3 id="fs"><a href="#fs" class="headerlink" title="fs"></a>fs</h3><figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-comment">// fs.writeFile(参数一,参数二,参数三,参数四)</span><br><span class="hljs-comment">//      参数一: 文件名</span><br><span class="hljs-comment">//      参数二: 写入的内容</span><br><span class="hljs-comment">//			参数三: w写入 a追加</span><br><span class="hljs-comment">//      参数四: 回调,当执行完写入的过程会执行这个回调</span><br><span class="hljs-comment">//          如果写入失败,形参err是有值的, 如果写入成功,形参err就是null</span><br> fs.writeFile(<span class="hljs-string">&#x27;1.txt&#x27;</span>, <span class="hljs-string">&#x27;我去买几个橘子去,你站在此地不要走动&#x27;</span>, &#123; <span class="hljs-attr">flag</span>: <span class="hljs-string">&#x27;a&#x27;</span> &#125;, <span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> &#123;<br>     <span class="hljs-keyword">if</span> (err) &#123;<br>         <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;写入失败&quot;</span>, err);<br>     &#125; <span class="hljs-keyword">else</span> &#123;<br>         <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;写入成功&quot;</span>);<br>     &#125;<br> &#125;);<br><br><span class="hljs-comment">// fs.writeFileSync(path,data[, options])</span><br><span class="hljs-comment">// 参数一: path，被写入文件的路径（相对路径或绝对路径）</span><br><span class="hljs-comment">// 参数二: data，要写入的内容，字符串格式</span><br><span class="hljs-comment">// 参数三: options：写入文件的参数配置，默认是utf8编码</span><br><br><span class="hljs-comment">// fs.createWriteStream(path)</span><br><span class="hljs-comment">// 1.创建一个写入流,其实就是一个对象</span><br><span class="hljs-keyword">const</span> wr = fs.createWriteStream(<span class="hljs-string">&#x27;./index.html&#x27;</span>);<br><span class="hljs-comment">// 2.开始写入</span><br>wr.write(<span class="hljs-string">&#x27;我家门前有两棵树\n&#x27;</span>);<br>wr.write(<span class="hljs-string">&#x27;一颗是枣树\n&#x27;</span>);<br>wr.write(<span class="hljs-string">&#x27;另一颗也是枣树\n&#x27;</span>);<br><span class="hljs-comment">// 3.关闭流</span><br>wr.close();<br><br><span class="hljs-comment">// fs.readFile(参数一, 参数二)</span><br><span class="hljs-comment">//      参数一: &#x27;文件名&#x27; 或  &#x27;路径/文件名&#x27;</span><br><span class="hljs-comment">//      参数二: 写入完成的回调</span><br><span class="hljs-comment">//              回调参数一: 错误对象,有值证明读取错误,null代表读取成功</span><br><span class="hljs-comment">//              回调参数一：读取到的数据,读取的数据是 buffer 类型</span><br> fs.readFile(<span class="hljs-string">&#x27;./index.html&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">err, data</span>) =&gt;</span> &#123;<br>     <span class="hljs-keyword">if</span> (err) &#123;<br>         <span class="hljs-keyword">throw</span> err; <span class="hljs-comment">// 抛出错误的意思</span><br>     &#125;<br>     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;读取成功&#x27;</span>);<br>     <span class="hljs-built_in">console</span>.log(data);<br>     <span class="hljs-built_in">console</span>.log(data.toString());<br> &#125;)<br><br><span class="hljs-comment">// fs.readFileSync(path)</span><br><span class="hljs-keyword">let</span> result = fs.readFileSync(<span class="hljs-string">&#x27;./1.txt&#x27;</span>);<br><span class="hljs-built_in">console</span>.log(result);<br><span class="hljs-built_in">console</span>.log(result.toString());<br><br><span class="hljs-comment">// fs.createReadStream(path)</span><br><span class="hljs-comment">// 1. 创建流对象(会自动去读取文件的内容)</span><br> <span class="hljs-keyword">let</span> rs = fs.createReadStream(<span class="hljs-string">&#x27;index.html&#x27;</span>);<br><br><span class="hljs-comment">// 2.监听读取数据,设置回调,拿到数据块</span><br><span class="hljs-comment">// chunk 是有数据块的意思	chunk 块最大放 64KB --&gt; 65536 byte</span><br> rs.on(<span class="hljs-string">&#x27;data&#x27;</span>, <span class="hljs-function"><span class="hljs-params">chunk</span> =&gt;</span> &#123;<br>     <span class="hljs-built_in">console</span>.log(chunk);<br>     <span class="hljs-built_in">console</span>.log(chunk.toString());<br> &#125;)<br><br><span class="hljs-comment">// fs.rename(参数一, 参数二, 参数三回调)</span><br><span class="hljs-comment">//      参数一: 操作的&quot;文件名&quot; &quot;路径/文件名&quot;</span><br><span class="hljs-comment">//      参数二: 目标的&quot;文件名&quot; &quot;路径/文件名&quot;</span><br><span class="hljs-comment">//      参数三: 回调函数</span><br><span class="hljs-comment">//          	 回调参数 err: 错误对象 -&gt; 成功为null,失败为错误对象</span><br><span class="hljs-comment">// 重命名文件</span><br> fs.rename(<span class="hljs-string">&#x27;1.txt&#x27;</span>, <span class="hljs-string">&#x27;app.css&#x27;</span>, <span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> &#123;<br>     <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;<br>     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;改名成功&#x27;</span>);<br> &#125;)<br><br><span class="hljs-comment">// 移动文件</span><br>fs.rename(<span class="hljs-string">&#x27;./index.html&#x27;</span>, <span class="hljs-string">&#x27;./file/index.html&#x27;</span>, <span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;移动成功&#x27;</span>);<br>&#125;)<br><br><span class="hljs-comment">// fs.unlink(参数一, 参数二回调)	删除不进入回收站,直接删除了</span><br><span class="hljs-comment">//      参数一: 删除的 &#x27;文件名&#x27;  &#x27;路径/文件名&#x27;</span><br><span class="hljs-comment">//      参数二: 回调函数</span><br><span class="hljs-comment">//          	 回调参数 err: 错误对象 -&gt; 成功为null,失败为错误对象</span><br>fs.unlink(<span class="hljs-string">&#x27;./app.css&#x27;</span>, <span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;删除成功&#x27;</span>);<br>&#125;)<br><br><span class="hljs-comment">// mkdir -&gt; make directory 缩写,创建文件夹</span><br><span class="hljs-comment">// 创建文件夹</span><br>fs.mkdir(<span class="hljs-string">&quot;shop&quot;</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;创建成功&quot;</span>);<br>&#125;);<br><br><span class="hljs-comment">// 创建多级文件夹: A/B/C</span><br><span class="hljs-comment">// &#123; recursive: true &#125;, 是否递归调用去创建, 默认是 false</span><br>fs.mkdir(<span class="hljs-string">&quot;A/B/C&quot;</span>, &#123; <span class="hljs-attr">recursive</span>: <span class="hljs-literal">true</span> &#125;, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;创建成功&quot;</span>);<br>&#125;);<br><br><span class="hljs-comment">// 删除文件夹</span><br>fs.rmdir(<span class="hljs-string">&quot;./shop&quot;</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;删除成功&quot;</span>);<br>&#125;);<br><br><span class="hljs-comment">// &#123; recursive: true &#125;, 是否递归调用去删除, 默认是 false</span><br>fs.rmdir(<span class="hljs-string">&quot;./A&quot;</span>, &#123; <span class="hljs-attr">recursive</span>: <span class="hljs-literal">true</span> &#125;, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;删除成功&quot;</span>);<br>&#125;);<br><br><span class="hljs-comment">// 读取文件夹</span><br>fs.readdir(<span class="hljs-string">&quot;./file&quot;</span>, <span class="hljs-function">(<span class="hljs-params">err, file</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;<br>    <span class="hljs-built_in">console</span>.log(file);<br>&#125;);<br><br><span class="hljs-comment">// fs.stat</span><br><span class="hljs-comment">// 查看文件的状态</span><br>fs.stat(<span class="hljs-string">&#x27;app.html&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">err, file</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;<br>    <span class="hljs-built_in">console</span>.log(file.isFile()); <span class="hljs-comment">// 判断当前文件的状态是不是一个文件</span><br>    <span class="hljs-comment">// console.log( file.isDirectory() ); // 判断是不是一个文件夹</span><br>&#125;)<br><br>fs.stat(<span class="hljs-string">&#x27;./file&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">err, file</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;<br>    <span class="hljs-comment">// console.log(file.isFile()); // 判断当前文件的状态是不是一个文件</span><br>    <span class="hljs-built_in">console</span>.log( file.isDirectory() ); <span class="hljs-comment">// 判断是不是一个文件夹</span><br>&#125;)<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="请求报文"><a href="#请求报文" class="headerlink" title="请求报文"></a>请求报文</h3><h4 id="请求行"><a href="#请求行" class="headerlink" title="请求行"></a>请求行</h4><ul>
+<li>请求方式       GET ,POST,PUT,DELETE</li>
+<li>域名                服务器在公网中ip地址的别名</li>
+<li>协议                HTTP协议 1.1 版本号</li>
+</ul>
+<figure class="highlight http"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs http"><span class="hljs-keyword">GET</span> <span class="hljs-string"></span> https://www.baidu.com/ <span class="hljs-string"></span> <span class="hljs-meta">HTTP/1.1</span><br></code></pre></div></td></tr></table></figure>
+
+<h4 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h4><ul>
+<li>Accept                             规定了浏览器接收的数据类型</li>
+<li>Accept-Language           浏览器接收的语言  zh-cn 中文</li>
+<li>User-Agent                     用户代理,一般情况下根据这个字段判断是否用的移动端访问的</li>
+<li>Accept-Encoding            接收什么类型的编码格式</li>
+<li>Host                                 主机名</li>
+<li>Connection                     连接的意思<ul>
+<li>Keep-Alive                保持连接(让服务器保持连接)</li>
+<li>close                         关闭连接(让服务器关闭连接)</li>
+</ul>
+</li>
+<li>Cache-Control                 缓存<ul>
+<li>no-cache                    不缓存</li>
+<li>max-age                     缓存的最大时间</li>
+</ul>
+</li>
+<li>cookie                                键值对文本，储存在浏览器，用于验证用户</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">Host</span>: www.baidu.com<br>  <span class="hljs-attribute">Connection</span>: keep-alive<br>  <span class="hljs-attribute">Pragma</span>: no-cache<br>  <span class="hljs-attribute">Cache</span>-Control: no-cache<br>  <span class="hljs-attribute">sec</span>-ch-ua: <span class="hljs-string">&quot; Not A;Brand&quot;</span>;v=<span class="hljs-string">&quot;99&quot;</span>, <span class="hljs-string">&quot;Chromium&quot;</span>;v=<span class="hljs-string">&quot;102&quot;</span>, <span class="hljs-string">&quot;Google Chrome&quot;</span>;v=<span class="hljs-string">&quot;102&quot;</span><br>  <span class="hljs-attribute">sec</span>-ch-ua-mobile: ?<span class="hljs-number">0</span><br>  <span class="hljs-attribute">sec</span>-ch-ua-platform: <span class="hljs-string">&quot;Windows&quot;</span><br>  <span class="hljs-attribute">Upgrade</span>-Insecure-Requests: <span class="hljs-number">1</span><br>  <span class="hljs-attribute">User</span>-Agent: Mozilla/<span class="hljs-number">5</span>.<span class="hljs-number">0</span> (Windows NT <span class="hljs-number">10</span>.<span class="hljs-number">0</span>; Win<span class="hljs-number">64</span>; x<span class="hljs-number">64</span>) AppleWebKit/<span class="hljs-number">537</span>.<span class="hljs-number">36</span> (KHTML, like Gecko) Chrome/<span class="hljs-number">102</span>.<span class="hljs-number">0</span>.<span class="hljs-number">5005</span>.<span class="hljs-number">63</span> Safari/<span class="hljs-number">537</span>.<span class="hljs-number">36</span><br>  <span class="hljs-attribute">Accept</span>: text/html,application/xhtml+xml,application/xml;q=<span class="hljs-number">0</span>.<span class="hljs-number">9</span>,image/avif,image/webp,image/apng,*/*;q=<span class="hljs-number">0</span>.<span class="hljs-number">8</span>,application/signed-exchange;v=b<span class="hljs-number">3</span>;q=<span class="hljs-number">0</span>.<span class="hljs-number">9</span><br>  <span class="hljs-attribute">Sec</span>-Fetch-Site: none<br>  <span class="hljs-attribute">Sec</span>-Fetch-Mode: navigate<br>  <span class="hljs-attribute">Sec</span>-Fetch-User: ?<span class="hljs-number">1</span><br>  <span class="hljs-attribute">Sec</span>-Fetch-Dest: document<br>  <span class="hljs-attribute">Accept</span>-Encoding: gzip, deflate, br<br>  <span class="hljs-attribute">Accept</span>-Language: zh-CN,zh;q=<span class="hljs-number">0</span>.<span class="hljs-number">9</span><br>  <span class="hljs-attribute">Cookie</span>: BIDUPSID=D<span class="hljs-number">323822077</span>D<span class="hljs-number">9</span>F<span class="hljs-number">478</span>C<span class="hljs-number">04260</span>EB<span class="hljs-number">19</span>A<span class="hljs-number">80</span>C<span class="hljs-number">80</span>; PSTM=<span class="hljs-number">1651999775</span>; BAIDUID=D<span class="hljs-number">323822077</span>D<span class="hljs-number">9</span>F<span class="hljs-number">4782</span>D<span class="hljs-number">1</span>CFBE<span class="hljs-number">659</span>CB<span class="hljs-number">9</span>B<span class="hljs-number">5</span>D:FG=<span class="hljs-number">1</span>;<br></code></pre></div></td></tr></table></figure>
+
+<h4 id="请求体"><a href="#请求体" class="headerlink" title="请求体"></a>请求体</h4><p>请求体内容格式非常灵活,且内容不限,可以有如下形式：html、xml、json、普通文本、图片等静态资源</p>
+<figure class="highlight ini"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs ini"><span class="hljs-attr">username</span>=zhangsan&amp;password=<span class="hljs-number">1111</span><br></code></pre></div></td></tr></table></figure>
+
+<h3 id="响应报文"><a href="#响应报文" class="headerlink" title="响应报文"></a>响应报文</h3><h4 id="相应行"><a href="#相应行" class="headerlink" title="相应行"></a>相应行</h4><ul>
+<li>协议    HTTP/1.1</li>
+<li>响应状态码    200  OK     404 Not Found       500 Server Error</li>
+<li>响应信息        OK</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">HTTP</span>/<span class="hljs-number">1</span>.<span class="hljs-number">1</span>   <span class="hljs-number">200</span>   OK<br></code></pre></div></td></tr></table></figure>
+
+<h4 id="相应头"><a href="#相应头" class="headerlink" title="相应头"></a>相应头</h4><ul>
+<li>Cache-Control                    private 私有的,只让客户端去缓存</li>
+<li>Connection: keep-alive     服务器和客户端的连接状态</li>
+<li><strong>Content-Type</strong>                     客户端接收的内容,告诉浏览器用什么方式解析返回的内容<ul>
+<li>text/html;charset=utf-8    使用中文字符集解析返回的html内容</li>
+</ul>
+</li>
+<li>Date: Mon, 06 Jun 2022 02:17:51 GMT            0时区的时间</li>
+<li>Expires: Mon, 06 Jun 2022 02:17:51 GMT        到期时间</li>
+<li>Server: BWS/1.1                  服务器的配置信息</li>
+<li>Set-Cookie                            设置cookie</li>
+<li>Strict-Transport-Security   通知浏览器该站点只能使用 HTTPS 访问</li>
+<li>Traceid                                  可以理解为服务追踪id</li>
+<li>X-Frame-Options                  新的规范,为了防止点击劫持</li>
+<li>X-Ua-Compatible：  IE=Edge,chrome=1    告诉IE使用最新的Edge引擎解析页面,chrome=1告诉chrome使用最新的引擎解析页面</li>
+<li>Content-Length                    内容长度(字节)  355053  -&gt; 35万字节</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">Bdpagetype</span>: <span class="hljs-number">1</span><br>        <span class="hljs-attribute">Bdqid</span>: <span class="hljs-number">0</span>xa<span class="hljs-number">8</span>dc<span class="hljs-number">8</span>da<span class="hljs-number">900058</span>d<span class="hljs-number">3</span>a<br>        <span class="hljs-attribute">Cache</span>-Control: private<br>        <span class="hljs-attribute">Connection</span>: keep-alive<br>        <span class="hljs-attribute">Content</span>-Type: text/html;charset=utf-<span class="hljs-number">8</span><br>        <span class="hljs-attribute">Date</span>: Mon, <span class="hljs-number">06</span> Jun <span class="hljs-number">2022</span> <span class="hljs-number">02</span>:<span class="hljs-number">13</span>:<span class="hljs-number">12</span> GMT<br>        <span class="hljs-attribute">Expires</span>: Mon, <span class="hljs-number">06</span> Jun <span class="hljs-number">2022</span> <span class="hljs-number">02</span>:<span class="hljs-number">12</span>:<span class="hljs-number">34</span> GMT<br>        <span class="hljs-attribute">Server</span>: BWS/<span class="hljs-number">1</span>.<span class="hljs-number">1</span><br>        <span class="hljs-attribute">Set</span>-Cookie: BDSVRTM=<span class="hljs-number">0</span>; path=/<br>        <span class="hljs-attribute">Set</span>-Cookie: BD_HOME=<span class="hljs-number">1</span>; path=/<br>        <span class="hljs-attribute">Set</span>-Cookie: H_PS_PSSID=<span class="hljs-number">36466</span>_<span class="hljs-number">36455</span>_<span class="hljs-number">31253</span>_<span class="hljs-number">36453</span>_<span class="hljs-number">35909</span>_<span class="hljs-number">36166</span>_<span class="hljs-number">36488</span>_<span class="hljs-number">36517</span>_<span class="hljs-number">36519</span>_<span class="hljs-number">26350</span>_<span class="hljs-number">36299</span>_<span class="hljs-number">36469</span>_<span class="hljs-number">36314</span>; path=/; domain=.baidu.com<br>        <span class="hljs-attribute">Strict</span>-Transport-Security: max-age=<span class="hljs-number">172800</span><br>        <span class="hljs-attribute">Traceid</span>: <span class="hljs-number">1654481592025457101812167756050237590842</span><br>        <span class="hljs-attribute">X</span>-Frame-Options: sameorigin<br>        <span class="hljs-attribute">X</span>-Ua-Compatible: IE=Edge,chrome=<span class="hljs-number">1</span><br>        <span class="hljs-attribute">Content</span>-Length: <span class="hljs-number">355108</span><br></code></pre></div></td></tr></table></figure>
+
+<h4 id="响应体"><a href="#响应体" class="headerlink" title="响应体"></a>响应体</h4><p>服务器返回给前端的内容，如html文件</p>
+<figure class="highlight routeros"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs routeros">&lt;html&gt;&lt;head&gt;&lt;meta <span class="hljs-attribute">http-equiv</span>=<span class="hljs-string">&quot;Content-Type&quot;</span> <span class="hljs-attribute">content</span>=<span class="hljs-string">&quot;text/html;charset=utf-8&quot;</span>&gt;&lt;meta <span class="hljs-attribute">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attribute">content</span>=<span class="hljs-string">&quot;IE=edge,chrome=1&quot;</span>&gt;<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="从输入URL到页面展现内容之间发生了什么"><a href="#从输入URL到页面展现内容之间发生了什么" class="headerlink" title="从输入URL到页面展现内容之间发生了什么"></a>从输入URL到页面展现内容之间发生了什么</h3><ul>
+<li>DNS 解析:将域名解析成 IP 地址</li>
+<li>TCP 连接：TCP 三次握手</li>
+<li>发送 HTTP 请求</li>
+<li>服务器处理请求并返回 HTTP 报文</li>
+<li>浏览器解析渲染页面</li>
+<li>断开连接：TCP 四次挥手</li>
+</ul>
+<p>引自</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903784229896199">从URL输入到页面展现到底发生什么？</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6935232082482298911">从输入URL开始建立前端知识体系</a></li>
+</ol>
+<h3 id="从HTTP到WEB缓存"><a href="#从HTTP到WEB缓存" class="headerlink" title="从HTTP到WEB缓存"></a>从HTTP到WEB缓存</h3><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903791809003527">从HTTP到WEB缓存</a></p>
+<h3 id="NodeJS模块查找规则"><a href="#NodeJS模块查找规则" class="headerlink" title="NodeJS模块查找规则"></a>NodeJS模块查找规则</h3><h4 id="模块有路径但没有后缀名"><a href="#模块有路径但没有后缀名" class="headerlink" title="模块有路径但没有后缀名"></a>模块有路径但没有后缀名</h4><ol>
+<li>先找同名js文件</li>
+<li>没找到则再找同名js文件夹，找到之后就寻找该文件夹下的index.js</li>
+<li>如果文件夹中没有index.js就会去当前文件夹中的package.json文件中查找main选项中的入口文件</li>
+<li>如果找指定的入口文件不存在或者没有指定入口文件就会报错：模块没有被找到</li>
+</ol>
+<h4 id="模块没有路径没有后缀名"><a href="#模块没有路径没有后缀名" class="headerlink" title="模块没有路径没有后缀名"></a>模块没有路径没有后缀名</h4><ol>
+<li>Node.js 会假设它是系统模块</li>
+<li>没找到则去node_modules 文件夹中寻找，首先看是否有该名字的js文件</li>
+<li>没有则再看是否有该名字的文件夹，找到之后就寻找该文件夹下的index.js</li>
+<li>如果没有则查看该文件夹中的package.json中的main选项确定模块入口文件</li>
+<li>如果找指定的入口文件不存在或者没有指定入口文件就会报错：模块没有被找到</li>
+</ol>
+<h3 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h3>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/NodeJS/">NodeJS</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/NodeJS/">NodeJS</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/03/React%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">React学习记录</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/05/07/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+                        <span class="hidden-mobile">数据结构</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js', function() {
+        var options = Object.assign(
+          {"envId":"https://twikoo-ruddy.vercel.app","region":"ap-shanghai","path":"window.location.pathname"},
+          {
+            el: '#twikoo',
+            path: 'window.location.pathname',
+            onCommentLoaded: function() {
+              Fluid.plugins.initFancyBox('#twikoo .tk-content img:not(.tk-owo-emotion)');
+            }
+          }
+        )
+        twikoo.init(options)
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a>© 2021 nh | </a> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        陇ICP备2021002517号
+      </a>
+    </span>
+    
+      
+        <span>
+          <a
+            href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=62010202003395"
+            rel="nofollow noopener"
+            class="beian-police"
+            target="_blank"
+          >
+            
+              <span style="visibility: hidden; width: 0">|</span>
+              <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+            
+            <span>甘公网安备62010202003395号</span>
+          </a>
+        </span>
+      
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+<script src="/js/iconfont.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
