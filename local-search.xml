@@ -29,31 +29,6 @@
   
   
   <entry>
-    <title>React学习记录</title>
-    <link href="/2022/07/03/React%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"/>
-    <url>/2022/07/03/React%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
-    
-    <content type="html"><![CDATA[<h2 id="React-Fragment"><a href="#React-Fragment" class="headerlink" title="React Fragment"></a>React Fragment</h2><p>React.Fragment 组件能够在不额外创建 DOM 元素的情况下，让 render() 方法返回多个元素，可以简写成&lt;&gt;&lt;/&gt;，但是简写形式不能接收键值或属性（<strong>key是唯一可以传递给Fragment的属性</strong>），从React16开始，render()支持返回数组，已经可以减少产生不必要的节点</p>]]></content>
-    
-    
-    <categories>
-      
-      <category>JS</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>React</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>NodeJS常见问题以及技巧</title>
     <link href="/2022/06/27/NodeJS%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%BB%A5%E5%8F%8A%E6%8A%80%E5%B7%A7/"/>
     <url>/2022/06/27/NodeJS%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%BB%A5%E5%8F%8A%E6%8A%80%E5%B7%A7/</url>
