@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cn.vuejs.org/images/lifecycle.png">
 <meta property="article:published_time" content="2022-07-18T11:57:56.000Z">
-<meta property="article:modified_time" content="2022-07-21T08:27:44.308Z">
+<meta property="article:modified_time" content="2022-07-28T01:19:37.545Z">
 <meta property="article:author" content="nh">
 <meta property="article:tag" content="Vue">
 <meta name="twitter:card" content="summary_large_image">
@@ -214,7 +214,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      6.3k 字
+      8.8k 字
     </span>
   
 
@@ -223,7 +223,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      20 分钟
+      28 分钟
     </span>
   
 
@@ -264,17 +264,23 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：3 小时前
+                  本文最后更新于：3 天前
                 
               </p>
             
             <div class="markdown-body">
               <h2 id="Vue内置指令"><a href="#Vue内置指令" class="headerlink" title="Vue内置指令"></a>Vue内置指令</h2><figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js">v-text <span class="hljs-comment">//可以是表达式，可以是函数调用，如果是undefine或null就不显示</span><br>v-html <span class="hljs-comment">//HTML内容</span><br>ref	   <span class="hljs-comment">//为特定的元素添加引用标识，实例的$refs内部可以获取到</span><br>v-on   <span class="hljs-comment">//绑定事件 简写@</span><br>v-bind <span class="hljs-comment">//单向数据绑定 简写:</span><br>v-<span class="hljs-keyword">for</span>	 <span class="hljs-comment">//列表渲染</span><br>v-<span class="hljs-keyword">if</span>	 <span class="hljs-comment">//条件渲染</span><br>v-<span class="hljs-keyword">else</span><br>v-show <span class="hljs-comment">//条件渲染</span><br>v-model<span class="hljs-comment">//双向数据绑定，MVVM模型</span><br></code></pre></div></td></tr></table></figure>
 
+<blockquote>
+<ul>
+<li><strong>在<em>html</em>标签中，写属性是在<em>绑定数据</em>，有<em>Vue指令</em>就是<em>动态数据</em>，否则就是字符串</strong></li>
+<li><strong>在<em>组件</em>标签中，写属性是在<em>传递数据</em>，有<em>Vue指令</em>就是<em>动态数据</em>，否则就是字符串</strong></li>
+</ul>
+</blockquote>
 <h2 id="Vue组件的data函数式与对象式的区别"><a href="#Vue组件的data函数式与对象式的区别" class="headerlink" title="Vue组件的data函数式与对象式的区别"></a>Vue组件的data函数式与对象式的区别</h2><p>在组件复用的时候，<em><strong>函数式</strong></em>data会给每个实例化对象都拷贝一份<code>data</code>，而<em><strong>对象式</strong></em><code>data</code>会指向同一个<code>data</code></p>
 <h2 id="事件绑定的回调的类型"><a href="#事件绑定的回调的类型" class="headerlink" title="事件绑定的回调的类型"></a>事件绑定的回调的类型</h2><ul>
 <li><code>回调函数类型</code>，<code>this</code>指向正常，不可以自行添加参数，默认自带一个<code>event</code>参数</li>
-<li><code>函数调用类型</code>，本质上是<code>Vue</code>在这个函数外层添加了一个<code>function($event)&#123;&#125;</code>，此时<code>this</code>指向<code>window</code>，<code>Vue</code>添加的外层参数会自带一个<code>$event</code>参数，并且不影响自行添加参数的顺序，想要使用事件对象需要向内层函数传入<code>$event</code></li>
+<li><code>函数调用类型</code>，本质上是<code>Vue</code>在这个函数外层添加了一个<code>function($event)&#123;&#125;</code>，此时<code>this</code>指向<code>window</code>，<code>Vue</code>添加的外层函数会自带一个<code>$event</code>参数，并且不影响自行添加参数的顺序，想要使用事件对象需要向内层函数传入<code>$event</code></li>
 </ul>
 <h2 id="Vue中的this指向"><a href="#Vue中的this指向" class="headerlink" title="Vue中的this指向"></a>Vue中的this指向</h2><ul>
 <li><code>data</code>中的<code>this</code>指向代理对象<code>Proxy</code></li>
@@ -283,8 +289,10 @@
 <h2 id="computed和watch的区别"><a href="#computed和watch的区别" class="headerlink" title="computed和watch的区别"></a>computed和watch的区别</h2><ul>
 <li><code>computed</code>一般用在需要使用暂时还不存在的数据且这个数据可以根据已有数据计算出的情况下，而且因为需要<code>return</code>结果，所以内部不能异步返回结果</li>
 <li><code>watch</code>一般用于监视已有数据的变化，数据发生改变的时候，执行回调函数，且内部可以执行异步操作</li>
-<li>能用<code>computed</code>实现的一定能使用<code>watch</code>实现，能用<code>watch</code>实现的不一定能用<code>computed</code>实现</li>
 </ul>
+<blockquote>
+<p>能用<code>computed</code>实现的一定能使用<code>watch</code>实现，能用<code>watch</code>实现的不一定能用<code>computed</code>实现</p>
+</blockquote>
 <h2 id="computed和methods定义函数调用的区别"><a href="#computed和methods定义函数调用的区别" class="headerlink" title="computed和methods定义函数调用的区别"></a>computed和methods定义函数调用的区别</h2><p><code>computed</code>有<em><strong>缓存机制</strong></em>，值不变且多次使用的情况下只有初次会进行计算</p>
 <p><code>methods</code>中定义函数绑定点击事件是在每次触发事件的时候都会执行，<strong>效率低下</strong></p>
 <h2 id="Vue收集表单数据规则"><a href="#Vue收集表单数据规则" class="headerlink" title="Vue收集表单数据规则"></a>Vue收集表单数据规则</h2><ul>
@@ -312,7 +320,7 @@
 <p>例如 <code>filter()</code>、<code>concat()</code> 和 <code>slice()</code></p>
 </li>
 </ol>
-<p>​        你可能认为这将导致 Vue 丢弃现有 DOM 并重新渲染整个列表。幸运的是，事实并非如此。Vue 为了使得 DOM 元素得到最大范    围的重用而实现了一些智能的启发式方法，所以用一个含有相同元素的数组去替换原来的数组是非常高效的操作。</p>
+<p>​        你可能认为这将导致 Vue 丢弃现有 DOM 并重新渲染整个列表。幸运的是，事实并非如此。Vue 为了使得 DOM 元素得到最大范围的重用而实现了一些智能的启发式方法，所以用一个含有相同元素的数组去替换原来的数组是非常高效的操作。</p>
 <figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js">example.items = example.items.filter(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">item</span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> item.message.match(<span class="hljs-regexp">/Foo/</span>)<br>&#125;)<br></code></pre></div></td></tr></table></figure>
 
 <h2 id="v-if-和-v-for-可以一起使用吗"><a href="#v-if-和-v-for-可以一起使用吗" class="headerlink" title="v-if 和 v-for 可以一起使用吗"></a>v-if 和 v-for 可以一起使用吗</h2><p><strong>永远不要把 <code>v-if</code> 和 <code>v-for</code> 同时用在同一个元素上</strong></p>
@@ -349,10 +357,10 @@
 <li><code>beforeCreate()&#123;&#125;</code> 刚开始初始化实例时执行，数据代理未完成，可以读取<code>Vue</code>实例对象，无法读取实例里的任何东西，比如<code>data</code>和<code>methods</code>和<code>事件监听</code>等</li>
 <li><code>created()&#123;&#125;</code> 实例已完成以下的配置：数据观测 (data observer)，属性和方法的运算，watch/event 事件回调，<em><strong>这是最早能读取实例里面的数据和方法的生命周期钩子，可以在此处进行异步数据的获取和对实例数据的初始化操作</strong></em></li>
 <li><code>beforeMount()&#123;&#125;</code> 挂载开始前调用，未创建真实DOM元素，不能读取<code>this.$refs</code></li>
-<li><code>mounted()&#123;&#125;</code> 初始化数据里的DOM元素，如果存在异步对DOM元素数据进行更改，就只能在<code>updated()&#123;&#125;</code>里获取，可以读取<code>this.$refs</code>，通常在此生命周期钩子中进行<em>发请求获取动态数据，修改初始化的数据，给真实DOM元素绑定自定义事件，开启定时器等操作，<code>$children</code>子组件的获取也需要在<code>mounted()&#123;&#125;</code>里</em></li>
+<li><code>mounted()&#123;&#125;</code> 初始化数据里的DOM元素，如果存在异步对DOM元素数据进行更改，就只能在<code>updated()&#123;&#125;</code>里获取，可以读取<code>this.$refs</code>，<strong>通常在此生命周期钩子中进行<em>发请求获取动态数据，修改初始化的数据，给真实DOM元素绑定自定义事件，开启定时器等操作，<code>$children</code>子组件的获取也需要在<code>mounted()&#123;&#125;</code>里</em></strong></li>
 <li><code>beforeUpdate()&#123;&#125;</code> <code>data</code>数据改变之后立即执行，但虚拟DOM还未重新渲染</li>
 <li><code>updated()&#123;&#125;</code> 虚拟DOM重新渲染已完成，<strong>如果对数据更新做一些统一处理在<code>updated()&#123;&#125;</code>中处理即可</strong>，可以执行依赖于DOM的操作，但是<strong>不要在这里修改当前组件中的<code>data</code>，否则会继续触发<code>beforeUpdate()&#123;&#125;</code>、<code>updated()&#123;&#125;</code>，进入死循环！</strong></li>
-<li><code>beforeDestroy()&#123;&#125;</code> 实例即将销毁时调用，<code>methods</code>，<code>watch</code>，<code>子组件</code>都还可以使用，通常在此生命周期钩子中进行<em>清除定时器，解绑事件等操作</em></li>
+<li><code>beforeDestroy()&#123;&#125;</code> 实例即将销毁时调用，<code>methods</code>，<code>watch</code>，<code>子组件</code>都还可以使用，<strong>通常在此生命周期钩子中进行<em>清除定时器，解绑事件等操作</em></strong></li>
 <li><code>destroyed()&#123;&#125;</code> 实例完成销毁立即调用，<code>Vue</code>实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁</li>
 </ul>
 <blockquote>
@@ -380,6 +388,48 @@
 </li>
 </ul>
 <h2 id="Vue-extend"><a href="#Vue-extend" class="headerlink" title="Vue.extend()"></a>Vue.extend()</h2><p><code>Vue.extend()</code>是一个继承自<code>Vue</code>的<code>Vue</code>构造器，参数是一个包含组件选项的对象，返回的是一个构造函数，可以通过实例化生成一个<code>Vue</code>实例</p>
+<h2 id="Vue的两种渲染方式"><a href="#Vue的两种渲染方式" class="headerlink" title="Vue的两种渲染方式"></a>Vue的两种渲染方式</h2><ul>
+<li><p>引入的<code>Vue</code>是带有模板解析器的版本</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-keyword">new</span> Vue(&#123;<br>  <span class="hljs-attr">el</span>:<span class="hljs-string">&#x27;#app&#x27;</span>,<br>  <span class="hljs-comment">// 第一种渲染App的方式</span><br>  <span class="hljs-comment">// 需要引入带模板解析器的vue版本，那么会造成后期打包体积过大，浏览器加载效率低</span><br>  <span class="hljs-comment">// You are using the runtime-only build of Vue </span><br>  <span class="hljs-comment">// where the template compiler is not available. </span><br>  <span class="hljs-comment">// Either pre-compile the templates into render functions,</span><br>  <span class="hljs-comment">// or use the compiler-included build</span><br>  <span class="hljs-attr">components</span>:&#123;<br>    App<br>  &#125;,<br>  <span class="hljs-attr">template</span>:<span class="hljs-string">&#x27;&lt;App/&gt;&#x27;</span><br>&#125;)<br></code></pre></div></td></tr></table></figure></li>
+<li><p>引入的<code>Vue</code>是不带模板解析器的版本</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-keyword">new</span> Vue(&#123;<br>  <span class="hljs-comment">// 第二种渲染App的方式</span><br>  <span class="hljs-comment">// 通过render函数去渲染App组件，它的内部调用了一个方法，h，这个方法内部自己写了一个解析器的功能</span><br>  <span class="hljs-comment">// 它没有解析器，后期代码体积会小</span><br>  <span class="hljs-attr">render</span>: <span class="hljs-function"><span class="hljs-params">h</span> =&gt;</span> h(App),<br>&#125;).$mount(<span class="hljs-string">&#x27;#app&#x27;</span>)<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="Vue组件间通信的11种方式"><a href="#Vue组件间通信的11种方式" class="headerlink" title="Vue组件间通信的11种方式"></a>Vue组件间通信的11种方式</h2><ol>
+<li><p><code>props</code>组件间通信（<strong>父子组件间通信</strong>）</p>
+<p>父组件通过在子组件中设置属性来达到给子组件传递数据的作用,子组件通过<code>props</code>属性来接收父组件传递的数据，接收到的<code>数据</code>可以当做是在子组件的<code>data</code>属性中声明的来使用，相当于<em><strong>父组件对子组件通信</strong></em>，接收到的<code>函数</code>可以当做是在<code>methods</code>属性中声明的来使用，如果函数需要传递参数，那么传的参数实际上就是<em><strong>子组件对父组件通信</strong></em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vue">&lt;!-- 父组件 --&gt;<br>&lt;Main :todoList=&quot;todoList&quot;&gt;&lt;/Main&gt;<br></code></pre></div></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js">&lt;!-- 子组件 --&gt;<br>props:[<span class="hljs-string">&#x27;todoList&#x27;</span>]<br></code></pre></div></td></tr></table></figure></li>
+<li><p>自定义事件组件间通信（<strong>子组件向父组件通信</strong>）</p>
+<p>给子组件绑定自定义事件，子组件内部触发这个自定义事件来调用自定义的回调函数传参，实现<em><strong>子组件向父组件的通信</strong></em>，与<code>props</code>组件间通信不同的是：**<code>props</code>组件间通信是将这个函数传递给子组件去调用的，而自定义事件组件间通信是将这个函数留在父组件中去调用的**</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vue">&lt;!-- 父组件 --&gt;<br>&lt;!-- 写法一：给子组件绑定事件 --&gt;<br>&lt;Header @addOneTodo=&quot;addOneTodo&quot;&gt;&lt;/Header&gt;<br></code></pre></div></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js">&lt;!-- 父组件 --&gt;<br>&lt;!-- 写法二：给子组件绑定ref属性，以便在mounted中获取真实DOM元素 --&gt;<br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Header</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;header&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">Header</span>&gt;</span></span><br>  <span class="hljs-function"><span class="hljs-title">mounted</span>(<span class="hljs-params"></span>)</span> &#123;<br>    <span class="hljs-built_in">this</span>.$refs.header.$on(<span class="hljs-string">&#x27;addOneTodo&#x27;</span>, <span class="hljs-built_in">this</span>.addOneTodo);<br>  &#125;,<br>&#125;<br><br></code></pre></div></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js">&lt;!-- 子组件 --&gt;<br>    methods: &#123;<br>        <span class="hljs-function"><span class="hljs-title">addOne</span>(<span class="hljs-params"></span>)</span> &#123;<br>            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.content?.trim()) &#123;<br>                <span class="hljs-keyword">let</span> obj = &#123;<br>                    <span class="hljs-attr">id</span>: <span class="hljs-built_in">Date</span>.now(),<br>                    <span class="hljs-attr">content</span>: <span class="hljs-built_in">this</span>.content.trim(),<br>                    <span class="hljs-attr">isCompleted</span>: <span class="hljs-literal">false</span>,<br>                &#125;;<br>                <span class="hljs-built_in">this</span>.$emit(<span class="hljs-string">&#x27;addOneTodo&#x27;</span>, obj);<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                alert(<span class="hljs-string">&quot;输入内容不能为空!&quot;</span>)<br>            &#125;<br>            <span class="hljs-built_in">this</span>.content = <span class="hljs-string">&#x27;&#x27;</span>;<br>        &#125;<br>    &#125;,<br>&#125;<br></code></pre></div></td></tr></table></figure></li>
+<li><p>全局事件总线（<strong>任意组件间通信</strong>）</p>
+<p>先在Vue实例化生命周期钩子<code>beforeCreate()&#123;&#125;</code>中定义全局事件总线，必须满足两个条件：<em><strong>所有的组件对象都能够访问事件总线</strong></em>，<em><strong>必须能够调用<code>$on</code>和<code>$emit</code>方法</strong></em>，<em><strong>所以选择<code>Vue</code>实例<code>vm</code>作为全局事件总线</strong></em></p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-comment">// main.js</span><br>Vue.prototype.$bus = <span class="hljs-built_in">this</span>;<br></code></pre></div></td></tr></table></figure>
+
+<p>在<strong>接收数据</strong>的组件当中，<strong>绑定自定义事件</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js">&lt;!-- 接收数据的组件 --&gt;<br>  <span class="hljs-function"><span class="hljs-title">mounted</span>(<span class="hljs-params"></span>)</span> &#123;<br>    <span class="hljs-built_in">this</span>.$bus.$on(<span class="hljs-string">&#x27;modifyOneTodo&#x27;</span>, <span class="hljs-built_in">this</span>.modifyOneTodo);<br>    <span class="hljs-built_in">this</span>.$bus.$on(<span class="hljs-string">&#x27;deleteOneTodo&#x27;</span>, <span class="hljs-built_in">this</span>.deleteOneTodo);<br>  &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>在<strong>发送数据</strong>的组件中，<strong>触发自定义事件</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js">&lt;!-- 发送数据的组件 --&gt;<br>    methods: &#123;<br>        <span class="hljs-function"><span class="hljs-title">modifyOne</span>(<span class="hljs-params"></span>)</span> &#123;<br>            <span class="hljs-built_in">this</span>.$bus.$emit(<span class="hljs-string">&#x27;modifyOneTodo&#x27;</span>, <span class="hljs-built_in">this</span>.index)<br>        &#125;,<br>        <span class="hljs-function"><span class="hljs-title">deleteOne</span>(<span class="hljs-params"></span>)</span> &#123;<br>            <span class="hljs-built_in">this</span>.$bus.$emit(<span class="hljs-string">&#x27;deleteOneTodo&#x27;</span>, <span class="hljs-built_in">this</span>.index)<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure></li>
+<li><p>消息订阅与发布（<strong>任意组件间通信</strong>）</p>
+<p>利用第三方插件<code>pubsub-js</code>实现任意组件间的通信</p>
+<p>在<strong>接收数据</strong>的组件中<strong>添加订阅</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js">PubSub.subscribe(<span class="hljs-string">&#x27;modifyAllTodo&#x27;</span>, <span class="hljs-built_in">this</span>.modifyAllTodo);<br></code></pre></div></td></tr></table></figure>
+
+<p>在<strong>发送数据</strong>的组件中<strong>发布数据</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js">PubSub.publish(<span class="hljs-string">&#x27;modifyAllTodo&#x27;</span>, val)<br></code></pre></div></td></tr></table></figure></li>
+<li><p>slot插槽</p>
+</li>
+<li><p>达</p>
+</li>
+</ol>
+</li>
+</ul>
 
             </div>
             <hr>
